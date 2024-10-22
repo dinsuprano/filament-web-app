@@ -5,6 +5,8 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -30,6 +32,25 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->navigationItems([
+                NavigationItem::make('Blog')
+                    ->url('https://blog.codewithdary.com', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-pencil-square')
+                    ->group('External')
+                    ->sort(2)
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Settings')
+                    ->url('')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                'logout' => MenuItem::make()->label('Log Out')
+            ])
+            // ->plugins([
+            //     SpotlightPlugin::make()
+            // ])
+            
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
